@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:user_auth_2/core/auth/forgotpasswordpage.dart';
+import 'package:user_auth_2/core/settings/settings.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'core/auth/auth.dart';
+
 import 'core/auth/loginpage.dart';
 import 'screen/homepage.dart';
+import 'core/auth/deleteuserpage.dart';
 import 'core/auth/signuppage.dart';
 import 'themes/custom_theme.dart';
 
@@ -33,7 +37,9 @@ class MyApp extends StatelessWidget {
       routes: {
         MyHomePage.routename: (context) => const MyHomePage(),
         CreateAccount.routename: (context) => const CreateAccount(),
-        ForgotPassword.routename: (context) => ForgotPassword(),
+        ForgotPassword.routename: (context) => const ForgotPassword(),
+        DeleteAccount.routename: (context) => const DeleteAccount(),
+        SettingsPage.routename: (context) => const SettingsPage(),
       },
     );
   }
@@ -45,7 +51,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
       body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: signInChangeNotifier(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return const MyHomePage();

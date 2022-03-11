@@ -4,7 +4,7 @@ class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primarySwatch: Colors.purple,
-      primaryColor: Color.fromARGB(255, 189, 169, 192),
+      primaryColor: const Color.fromARGB(255, 189, 169, 192),
       scaffoldBackgroundColor: Colors.white,
       fontFamily: 'Montserrat',
       textTheme: const TextTheme(

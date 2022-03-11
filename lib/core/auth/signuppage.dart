@@ -37,12 +37,11 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    //top: size.height / 4.5,
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(left: 40, right: 40),
+            padding: const EdgeInsets.only(left: 40, right: 40),
             child: Column(
               children: [
                 Padding(
@@ -111,7 +110,9 @@ class _CreateAccountState extends State<CreateAccount> {
                                     content: Text(
                                         'Successful Registration! You can log in now'),
                                     duration: Duration(seconds: 3)));
-                            Navigator.of(context).pop();
+                            _auth.signOut();
+                            Navigator.of(context)
+                                .popUntil((route) => route.isFirst);
                           } on FirebaseAuthException catch (e) {
                             showDialog(
                                 context: context,

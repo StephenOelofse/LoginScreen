@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-final _auth = FirebaseAuth.instance;
-
-Future<void> sendPasswordResetEmail(String email) async {
-  return _auth.sendPasswordResetEmail(email: email);
-}
+import 'auth.dart';
 
 class ForgotPassword extends StatefulWidget {
-  ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 
   static const routename = 'forgotpassword';
 
@@ -76,7 +71,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             'If the email is valid, you have been sent a password reset email'),
                         duration: Duration(seconds: 3)));
                     Navigator.of(context).pop();
-                  } on FirebaseAuthException catch (e) {
+                  } on FirebaseAuthException
+                  //catch (e)
+                  {
                     setState(() {
                       emailError = true;
                     });

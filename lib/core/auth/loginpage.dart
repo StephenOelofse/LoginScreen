@@ -28,14 +28,16 @@ class _LoginPageState extends State<LoginPage> {
     final name = await UserSecureStorage.getUsername() ?? '';
     final rememberMeStatus = await UserSecureStorage.getRememberMe() ?? 'false';
 
-    setState(() {
-      _emailController.text = name;
-      if (name == '') {
-        isChecked = false;
-      } else if (rememberMeStatus == 'true') {
-        isChecked = true;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        _emailController.text = name;
+        if (name == '') {
+          isChecked = false;
+        } else if (rememberMeStatus == 'true') {
+          isChecked = true;
+        }
+      });
+    }
   }
 
   @override
@@ -91,10 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   buildCheckBox(),
                   TextButton(
                     child: const Text('Remember Me'),
-                    onPressed: () async {
-                      await UserSecureStorage.setUsername(
-                          _emailController.text);
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -144,11 +143,15 @@ class _LoginPageState extends State<LoginPage> {
               child: CircularProgressIndicator(),
             ));
     try {
+      if (isChecked) {
+        UserSecureStorage.setUsername(_emailController.text);
+      }
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      print(e);
+    } on FirebaseAuthException {
+      //catch (e) unused
+      //TODO impliment exception
     }
     navigatorKey.currentState!.popUntil(((route) => route.isFirst));
   }
@@ -161,7 +164,6 @@ class _LoginPageState extends State<LoginPage> {
           setState(() {
             isChecked = value!;
             if (isChecked) {
-              UserSecureStorage.setUsername(_emailController.text);
               UserSecureStorage.setRememberMe('true');
             } else {
               UserSecureStorage.setRememberMe('false');
