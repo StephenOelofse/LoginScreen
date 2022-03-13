@@ -4,6 +4,7 @@ import 'package:user_auth_2/core/auth/forgotpasswordpage.dart';
 import 'package:user_auth_2/main.dart';
 import 'package:user_auth_2/core/auth/signuppage.dart';
 import 'package:user_auth_2/utils/services/user_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -47,6 +48,8 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  final String assetName = 'lib/assets/images/abstract-user-flat-3.svg';
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -57,6 +60,18 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.only(left: 50, right: 50),
           child: Column(
             children: [
+              Opacity(
+                opacity: 0.5,
+                child: SvgPicture.asset(
+                  assetName,
+                  semanticsLabel: 'Acme Logo',
+                  width: 60,
+                  height: 60,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: Text(
